@@ -22,11 +22,14 @@ def orangeRoad():
     orangeRoad = CatanRoads(Colors.ORANGE)
     return orangeRoad
 
+
 def test_Constructor_RoadDefault(roadDefault):
     assert roadDefault.getColor() == Colors.UNINITIALIZED
 
+
 def test_Constructor_OrangeRoad(orangeRoad):
     assert orangeRoad.getColor() == Colors.ORANGE
+
 
 def test_SetColor_InvalidInput(roadDefault):
     with pytest.raises(ValueError):

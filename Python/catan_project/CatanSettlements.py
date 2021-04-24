@@ -64,7 +64,7 @@ class CatanSettlements:
         # check valid value for settlement
         if aValue < 0 or aValue > 2:
             raise ValueError("Did not provide a valid value for settlement/city...")
-            self.m_value = 0
+
         self.m_value = aValue
 
 
@@ -93,7 +93,6 @@ class CatanSettlements:
         # check valid input for color; value is within Colors array
         if (aColor.value < Colors.LOWER.value) or (aColor.value > Colors.UPPER.value):
             raise ValueError("Did not procide a valid input for settlement/city color...")
-            self.m_color = Colors.UNINITIALIZED
             
         self.m_color = aColor
 

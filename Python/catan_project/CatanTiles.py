@@ -27,6 +27,8 @@ class ResourceTypes(enum.Enum):
     WOOL = 4
     NUM_RESOURCES = 5
     NONE = -1
+    LOWER = NONE
+    UPPER = WOOL
 
 
 
@@ -62,10 +64,10 @@ class CatanTiles:
         
         self.m_tileEdges = []
         for i in range(3):
-            self.m_tileVertices.append([])
+            self.m_tileEdges.append([])
             for j in range(2):
                 tmp = CatanRoads()
-                self.m_tileVertices[i].append(tmp)
+                self.m_tileEdges[i].append(tmp)
                 
                 
     """
@@ -80,6 +82,21 @@ class CatanTiles:
     
     
     """
+    setResourceType()
+    ----------------
+    
+    Inputs
+    aResourceType  A ResourceTypes enum value to assign the tiles resource
+    """
+    def setResourceType(self, aResourceType):
+        # valid that the input is a valid resource type
+        if (aResourceType.value < ResourceTypes.LOWER.value) or (aResourceType.value > ResourceTypes.UPPER.value):
+            raise ValueError("Did not provide a valid resource type...")
+
+        self.m_resourceType = aResourceType
+    
+    
+    """
     getTileValue()
     ---------------
     
@@ -91,6 +108,21 @@ class CatanTiles:
     
     
     """
+    setTileValue()
+    ---------------
+    
+    Inputs
+    aValue  An integer of the dice value for the tile
+    """
+    def setTileValue(self, aValue):
+        # validate valid input for tile value
+        if (aValue < 0) or (aValue > 12):
+            raise ValueError("Did not provide a valid input for tile value...")
+
+        self.m_tileValue = aValue
+    
+    
+    """
     checkTileHasRobber()
     ----------------
     
@@ -99,6 +131,21 @@ class CatanTiles:
     """
     def checkTileHasRobber(self):
         return self.m_tileHasRobber
+    
+    
+    """
+    setTileHasRobber()
+    ----------------
+    
+    Input
+    aHasRobber  A boolean value indicating if the robber is on the tile
+    """
+    def setTileHasRobber(self, aHasRobber):
+        # validate vaid input
+        if type(aHasRobber) != bool:
+            raise ValueError("Did not provide valid boolean input...")
+
+        self.m_tileHasRobber = aHasRobber
     
     
     """
@@ -118,6 +165,26 @@ class CatanTiles:
     
     
     """
+    setTileVertex(row, col, aSettlement)
+    ----------------
+    
+    Inputs
+    row  An integer for the row index for the tile grid of vertices
+    
+    col  An integer for the col index for the tile grid of vertices
+    
+    aSettlement  A CatanSettlement instance to place at the tile vertex
+    """
+    def setTileVertex(self, row, col, aSettlement):
+        # validate inputs
+        if (row < 0) or (row > 1) or (col < 0) or (col > 2):
+            raise ValueError("Invalid index to row/col...")
+        elif (type(aSettlement) != CatanSettlements):
+            raise ValueError("Invalid input for catan settlement...")
+        self.m_tileVertices[row][col] = aSettlement
+    
+    
+    """
     getTileEdge(row, col)
     ----------------
     
@@ -131,4 +198,24 @@ class CatanTiles:
     """
     def getTileEdge(self, row, col):
         return self.m_tileEdges[row][col]
+    
+    
+    """
+    getTileEdge(row, col, aRoad)
+    ----------------
+    
+    Inputs
+    row  An integer for the row index for the tile grid of edges
+    
+    col  An integer for the col index for the tile grid of edges
+    
+    aRoad  A CatanRoad instance to place on the tile edge
+    """
+    def setTileEdge(self, row, col, aRoad):
+        # validate inputs
+        if (row < 0) or (row > 2) or (col < 0) or (col > 1):
+            raise ValueError("Invalid index to row/col...")
+        elif (type(aRoad) != CatanRoads):
+            raise ValueError("Invalid input for catan road...")
+        self.m_tileEdges[row][col] = aRoad
     

@@ -37,7 +37,6 @@ class CatanRoads:
         # check valid input for color; value is within Colors array
         if (aColor.value < Colors.LOWER.value) or (aColor.value > Colors.UPPER.value):
             raise ValueError("Did not procide a valid input for road color...")
-            self.m_color = Colors.UNINITIALIZED
             
         self.m_color = aColor
 

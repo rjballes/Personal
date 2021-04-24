@@ -21,17 +21,21 @@ def blueSettlement():
     blueSettlement = CatanSettlements(1, Colors.BLUE)
     return blueSettlement
 
+
 def test_Constructor_Default(settlementDefault):
     assert settlementDefault.getValue() == 0
     assert settlementDefault.getColor() == Colors.UNINITIALIZED
+
 
 def test_Constructor_BlueSettlement(blueSettlement):
     assert blueSettlement.getValue() == 1
     assert blueSettlement.getColor() == Colors.BLUE
 
+
 def test_SetValue_InvalidInput(settlementDefault):
     with pytest.raises(ValueError):
         settlementDefault.setValue(-1)
+       
         
 def test_SetColor_InvalidInput(settlementDefault):
     with pytest.raises(ValueError):
