@@ -3,7 +3,7 @@
 Created on Fri Apr 23 10:15:20 2021
 
 @author: Raymart Ballesteros
-@date: 4/23/2021
+@date: 6/1/2021
 @brief: This is a class to represent the settlement and city pieces on the 
 Catan board.
 """
@@ -11,6 +11,7 @@ Catan board.
 
 # imports
 import enum
+from PyQt5 import QtCore
 
 
 """
@@ -44,14 +45,19 @@ class CatanSettlements:
             
     aColor  Can take on a value from the enum class Colors. Holds the color of
             the player that owns the settlement/city.
+            
+    aXCoord  Represents the x-component of the position of the settlement (float).
+    
+    aYCoord  Represents the y-component of the position of the settlement (float).
     """
-    def __init__(self, aValue=0, aColor=Colors.UNINITIALIZED):
-        self.setValue(aValue)
-        self.setColor(aColor)
+    def __init__(self, aXCoord, aYCoord, aValue=0, aColor=Colors.UNINITIALIZED):
+        self.m_position = QtCore.QPointF(aXCoord, aYCoord)
+        self.m_value = aValue
+        self.m_color = aColor
 
 
     """
-    setValue()
+    setValue(aValue)
     -------------
     This method takes an integer input and assigns it to the m_value attribute 
     of the object.
@@ -62,7 +68,7 @@ class CatanSettlements:
     """
     def setValue(self, aValue):
         # check valid value for settlement
-        if aValue < 0 or aValue > 2:
+        if (aValue < 0 or aValue > 2) or (type(aValue) != int):
             raise ValueError("Did not provide a valid value for settlement/city...")
 
         self.m_value = aValue
@@ -82,7 +88,7 @@ class CatanSettlements:
 
 
     """
-    setColor()
+    setColor(aColor)
     -------------
     This method takes an enum of type Colors and assigns it to the color attribute.
     
@@ -91,8 +97,10 @@ class CatanSettlements:
     """
     def setColor(self, aColor):
         # check valid input for color; value is within Colors array
-        if (aColor.value < Colors.LOWER.value) or (aColor.value > Colors.UPPER.value):
-            raise ValueError("Did not procide a valid input for settlement/city color...")
+        if (type(aColor) != Colors):
+            raise TypeError("Did not provide an enum value of type Colors...")
+        elif (aColor.value < Colors.LOWER.value) or (aColor.value > Colors.UPPER.value):
+            raise ValueError("Did not provide a valid input for settlement/city color...")
             
         self.m_color = aColor
 
@@ -107,4 +115,34 @@ class CatanSettlements:
     """
     def getColor(self):
         return self.m_color
+    
+    
+    """
+    setCoords(xc, yc)
+    -------------
+    This method takes x and y coordinates (floats) and assigns them for the position
+    of the settlement on the bame board.
+    
+    Parameters
+    xc  float
+    yc  float
+    """
+    def setCoords(self, xc, yc):
+        if (type(xc) != float) or (type(yc) != float):
+            raise ValueError("Did not provide float values for the coordinates...")
+                    
+        self.m_position = QtCore.QPointF(xc,yc)
+
+
+    """
+    getCoords()
+    -------------
+    This method returns the x and y coordinates of the game piece on the board.
+    
+    Returns
+    [self.m_x, self.m_y]  Returns a list of size two with the coordinates of 
+                          the game piece on the game board (gui)
+    """
+    def getCoords(self):
+        return self.m_position
         
